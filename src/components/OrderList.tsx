@@ -1,8 +1,6 @@
 import React from 'react'
-import { fetchData } from '../api/fetchData'
-import { useQuery } from '@tanstack/react-query'
 import { useOrders } from '../hooks/useOrders'
-import OrderComponent from './OrderComponent'
+import OrderButton from './OrderButton'
 import { OrderType } from '../utils/types'
 import { isAfter, parse, set } from 'date-fns'
 
@@ -12,8 +10,9 @@ type Props = {
 
 const OrderList = (props: Props) => {
 
-  const { data: orders, isLoading, isError, error} = useOrders()
+  const { data: orders, isLoading, isError} = useOrders()
 
+  // filtering past dates
   const filterOrders = (orders: OrderType[] | undefined)=>{
     return orders?.filter(order => {
       const orderTime = parse(order.Time, 'HH:mm', props.currentDate)
@@ -26,19 +25,19 @@ const OrderList = (props: Props) => {
       return isAfter(orderDateTime, new Date());
     })
   }
-  
+  // actual and future orders
   const futureOrder = orders ? filterOrders(orders) : []
 
   if(isLoading){
-    return (<p>Loading ...</p>)
+    return (<p className='text-[30px] font-bold'>Loading ...</p>)
   }
 
   if(isError){
-    return (<p>{JSON.stringify(error)}</p>)
+    return (<p>Something went wrong...</p>)
   }
 
-  const renderOrderComponent = futureOrder?.map((order, index) => <OrderComponent key={index} order={order}/>)
-  const testComponent = orders?.map((order, index) => <OrderComponent key={index} order={order}/>)
+  const renderOrderComponent = futureOrder?.map((order, index) => <OrderButton key={index} order={order}/>)
+
   return (
     <div className='flex flex-wrap items-center justify-center'>
       {renderOrderComponent}

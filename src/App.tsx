@@ -5,7 +5,7 @@ import OrderView from "./components/OrderView";
 
 function App() {
   return (
-    <div className="items-center w-screen h-screen bg-[#00132d] text-white">
+    <div className="w-screen h-screen bg-[#00132d] text-white">
       <Navbar />
       <div className="flex justify-center mt-2">
         <OrderView/>

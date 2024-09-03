@@ -5,17 +5,23 @@ import {
   StarIcon,
 } from "@radix-ui/react-icons";
 import React from "react";
+import classNames from "classnames";
 
-type Props = {};
+type Props = {
+    onClick?: () => void
+};
+
+
+const navBarClassname = classNames('size-[40px] p-1 cursor-pointer hover:bg-[#00377e] rounded-full')
 
 const Navbar = (props: Props) => {
   return (
-    <div className="bg-[#00193b] text-white w-full flex justify-center">
-      <div className="flex space-x-3 p-2">
-        <PersonIcon className="size-[30px] cursor-pointer hover:bg-[#00377e] rounded-full" />
-        <StarIcon className="size-[30px] cursor-pointer hover:bg-[#00377e] rounded-full" />
-        <CounterClockwiseClockIcon className="size-[30px] cursor-pointer hover:bg-[#00377e] rounded-full" />
-        <CalendarIcon className="size-[30px] cursor-pointer hover:bg-[#00377e] rounded-full" />
+    <div className="bg-[#00193b] text-white w-screen flex justify-center">
+      <div className="flex space-x-4 p-2">
+        <PersonIcon className={navBarClassname} />
+        <StarIcon className={navBarClassname} />
+        <CounterClockwiseClockIcon className={navBarClassname} />
+        <CalendarIcon className={navBarClassname} />
       </div>
     </div>
   );
