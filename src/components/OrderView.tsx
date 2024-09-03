@@ -10,14 +10,18 @@ const OrderView = (props: Props) => {
 
   const today = format(currentDate, "dd.MM");
   const tommorow = format(addDays(currentDate, 1), "dd.MM");
-  const time = format(currentDate, "HH:mm");
-
+  
+  
   const handleNextDay = () => {
     setCurrentDate((prevDate) => addDays(prevDate, 1));
+    console.log(currentDate);
+    
   };
 
   const handlePreviousDay = () => {
     setCurrentDate((prevDate) => subDays(prevDate, 1));
+    console.log(currentDate);
+    
   };
 
   return (
@@ -27,15 +31,15 @@ const OrderView = (props: Props) => {
           onClick={handlePreviousDay}
           className="size-[25px] cursor-pointer"
         />
-        <p className="text-[20px]">Dnes {today}</p>
-        <p className="text-[20px]">Zajtra {tommorow}</p>
+        <p className="p-2 bg-yellow-600 rounded">Dnes {today}</p>
+        <p className="p-2">Zajtra {tommorow}</p>
         <ChevronRightIcon
           onClick={handleNextDay}
           className="size-[25px] cursor-pointer"
         />
       </div>
       <div>
-        <OrderList />
+        <OrderList currentDate={currentDate}/>
       </div>
     </div>
   );

@@ -6,26 +6,25 @@ import OrderComponent from './OrderComponent'
 import { OrderType } from '../utils/types'
 import { isAfter, parse, set } from 'date-fns'
 
-type Props = {}
+type Props = {
+  currentDate: Date
+}
 
 const OrderList = (props: Props) => {
 
   const { data: orders, isLoading, isError, error} = useOrders()
-  console.log(orders);
-
-  const now = new Date()
 
   const filterOrders = (orders: OrderType[] | undefined)=>{
-    const newOrders = orders?.filter(order => {
-      const orderTime = parse(order.Time, 'HH:mm', now)
+    return orders?.filter(order => {
+      const orderTime = parse(order.Time, 'HH:mm', props.currentDate)
+
       const orderDateTime = set(orderTime, {
-        year: now.getFullYear(),
-        month: now.getMonth(),
-        date: now.getDate(),
+        year: props.currentDate.getFullYear(),
+        month: props.currentDate.getMonth(),
+        date: props.currentDate.getDate(),
       });
-      return isAfter(orderDateTime, now);
+      return isAfter(orderDateTime, new Date());
     })
-    return newOrders;
   }
   
   const futureOrder = orders ? filterOrders(orders) : []
@@ -39,10 +38,9 @@ const OrderList = (props: Props) => {
   }
 
   const renderOrderComponent = futureOrder?.map((order, index) => <OrderComponent key={index} order={order}/>)
-
+  const testComponent = orders?.map((order, index) => <OrderComponent key={index} order={order}/>)
   return (
     <div className='flex flex-wrap items-center justify-center'>
-      {/* <button onClick={}>fetch</button> */}
       {renderOrderComponent}
     </div>
   )
